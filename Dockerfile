@@ -3,6 +3,10 @@ FROM node:16-alpine AS builder
 
 WORKDIR /app
 
+# Accept build argument for API URL
+ARG REACT_APP_BASEURL
+ENV REACT_APP_BASEURL=$REACT_APP_BASEURL
+
 # Install dependencies first (better layer caching)
 COPY package*.json ./
 RUN npm install
