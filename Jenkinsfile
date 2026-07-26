@@ -1,6 +1,10 @@
 pipeline {
     agent any
 
+    tools {
+        nodejs 'node16'
+    }
+
     environment {
         AWS_REGION          = 'ap-southeast-1'
         ECR_REPO            = 'trysast/private-registry'
@@ -8,20 +12,17 @@ pipeline {
         IMAGE_TAG           = "${env.BUILD_NUMBER}"
         REACT_APP_BASEURL   = '<url-backend-be-dumbmerch>'
     }
-
     stages {
         stage('Checkout') {
             steps {
                 checkout scm
             }
         }
-
         stage('Install Dependencies') {
             steps {
                 sh 'npm install'
             }
         }
-
         stage('SAST - SonarQube Analysis') {
             steps {
                 withSonarQubeEnv('sonarqube') {
@@ -29,7 +30,6 @@ pipeline {
                 }
             }
         }
-
         stage('Quality Gate') {
             steps {
                 timeout(time: 5, unit: 'MINUTES') {
@@ -37,7 +37,6 @@ pipeline {
                 }
             }
         }
-
         stage('Build Docker Image') {
             steps {
                 sh """
@@ -47,23 +46,19 @@ pipeline {
                 """
             }
         }
-
         stage('Push to ECR') {
             steps {
                 sh """
                     aws ecr get-login-password --region ${AWS_REGION} | \
                     docker login --username AWS --password-stdin ${ECR_REGISTRY}
-
                     docker tag ${ECR_REPO}:${IMAGE_TAG} ${ECR_REGISTRY}/${ECR_REPO}:${IMAGE_TAG}
                     docker tag ${ECR_REPO}:${IMAGE_TAG} ${ECR_REGISTRY}/${ECR_REPO}:latest
-
                     docker push ${ECR_REGISTRY}/${ECR_REPO}:${IMAGE_TAG}
                     docker push ${ECR_REGISTRY}/${ECR_REPO}:latest
                 """
             }
         }
     }
-
     post {
         failure {
             echo 'Pipeline gagal — cek stage SAST atau build.'
