@@ -3,7 +3,6 @@ pipeline {
 
     tools {
         nodejs 'node16'
-        sonarQube 'sonar-scanner'
     }
 
     environment {
@@ -26,8 +25,11 @@ pipeline {
         }
         stage('SAST - SonarQube Analysis') {
             steps {
-                withSonarQubeEnv('sonarqube') {
-                    sh 'sonar-scanner'
+                script {
+                    def scannerHome = tool 'sonar-scanner'
+                    withSonarQubeEnv('sonarqube') {
+                        sh "${scannerHome}/bin/sonar-scanner"
+                    }
                 }
             }
         }
