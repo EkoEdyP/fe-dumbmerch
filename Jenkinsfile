@@ -4,7 +4,7 @@ pipeline {
     environment {
         AWS_REGION          = 'ap-southeast-1'
         ECR_REPO            = 'trysast/private-registry'
-        ECR_REGISTRY        = "<account-id>.dkr.ecr.${AWS_REGION}.amazonaws.com"
+        ECR_REGISTRY        = "252303747004.dkr.ecr.${AWS_REGION}.amazonaws.com"
         IMAGE_TAG           = "${env.BUILD_NUMBER}"
         REACT_APP_BASEURL   = '<url-backend-be-dumbmerch>'
     }
