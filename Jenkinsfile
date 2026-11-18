@@ -50,7 +50,7 @@ pipeline {
 
     post {
         success {
-            echo "Pipeline CI/CD dan SonarQube berhasil! Aplikasi berjalan di http://localhost:3000"
+            echo "Pipeline CI/CD berhasil! Aplikasi berjalan di http://localhost:3000"
         }
         failure {
             echo "Pipeline gagal. Periksa Console Output untuk detail error."
