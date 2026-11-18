@@ -1,6 +1,10 @@
 # Stage 1: Build React App
 FROM node:18-alpine AS builder
 WORKDIR /app
+
+# Atasi error OpenSSL pada Node.js v17+
+ENV NODE_OPTIONS=--openssl-legacy-provider
+
 COPY package*.json ./
 RUN npm install --legacy-peer-deps
 COPY . .
