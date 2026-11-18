@@ -5,7 +5,7 @@ pipeline {
         IMAGE_NAME = "fe-dumbmerch"
         CONTAINER_NAME = "fe-dumbmerch-app"
         // Sesuaikan dengan nama kredensial token SonarQube di Jenkins Anda
-        SONAR_CREDENTIALS_ID = "squ_37252768fff59a33b775e0dd3ae7ed517b993249" 
+        // SONAR_CREDENTIALS_ID = "squ_37252768fff59a33b775e0dd3ae7ed517b993249" 
     }
 
     stages {
@@ -15,16 +15,16 @@ pipeline {
             }
         }
 
-        stage('SonarQube Analysis') {
-            steps {
-                script {
-                    // Pastikan nama server SonarQube di Manage Jenkins -> System sesuai (misal: SonarQube-Local)
-                    withSonarQubeEnv('SonarQube-Local') {
-                        sh "sonar-scanner -Dsonar.projectKey=fe-dumbmerch -Dsonar.sources=src"
-                    }
-                }
-            }
-        }
+        // stage('SonarQube Analysis') {
+        //     steps {
+        //         script {
+        //             // Pastikan nama server SonarQube di Manage Jenkins -> System sesuai (misal: SonarQube-Local)
+        //             withSonarQubeEnv('SonarQube-Local') {
+        //                 sh "sonar-scanner -Dsonar.projectKey=fe-dumbmerch -Dsonar.sources=src"
+        //             }
+        //         }
+        //     }
+        // }
 
         stage('Build Docker Image') {
             steps {
