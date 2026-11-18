@@ -9,7 +9,7 @@ pipeline {
     stages {
         stage('Checkout Code') {
             steps {
-                git branch: 'main', url: 'https://github.com/EkoEdyP/fe-dumbmerch.git'
+                git branch: 'test', url: 'https://github.com/EkoEdyP/fe-dumbmerch.git'
             }
         }
 
